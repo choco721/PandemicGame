@@ -29,7 +29,7 @@ public class persona4 {
                 System.out.println("puede ir como estrategia para controlar la propagación de enfermedades en América del Norte.");
 
             case "san francisco":
-                    System.out.println("");
+                    System.out.println("su ubicacion esquinada hace que hayan menos brotes a diferencia de otras ciudades centrales");
 
 
 
