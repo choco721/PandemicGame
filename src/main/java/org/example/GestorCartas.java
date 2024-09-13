@@ -20,17 +20,18 @@ public class GestorCartas {
     }
 
     private void inicializarMazos() {
-        // Añadir cartas al mazo de infección
-        mazoInfeccion.add("Infección Ciudad 1");
-        mazoInfeccion.add("Infección Ciudad 2");
-        mazoInfeccion.add("Infección Ciudad 3");
-        // Añadir más cartas según sea necesario
+        // Añadir cartas al mazo de infección (ciudades a infectar)
+        mazoInfeccion.add("New York");
+        mazoInfeccion.add("Los Angeles");
+        mazoInfeccion.add("Chicago");
+        mazoInfeccion.add("Miami");
+        // Agregar más cartas de infección según sea necesario
 
-        // Añadir cartas al mazo de eventos
+        // Añadir cartas al mazo de eventos (eventos especiales)
         mazoEventos.add("Evento 1: Reacción rápida");
         mazoEventos.add("Evento 2: Movimiento rápido");
         mazoEventos.add("Evento 3: Curación inmediata");
-        // Añadir más cartas de eventos según sea necesario
+        // Agregar más cartas de eventos según sea necesario
     }
 
     private void barajarMazos() {
@@ -78,5 +79,4 @@ public class GestorCartas {
         return pilaDescarteEventos;
     }
 }
-
 
