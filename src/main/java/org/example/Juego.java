@@ -1,15 +1,13 @@
-package org.example;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 // Clase Ciudad que representa una ciudad en el juego
-class ciudad {
+class Ciudad {
     private String nombre;
     private boolean infectada;
 
-    public ciudad(String nombre) {
+    public Ciudad(String nombre) {
         this.nombre = nombre;
         this.infectada = false;
     }
@@ -30,18 +28,18 @@ class ciudad {
         this.infectada = false;
     }
 
-    @Override
+
     public String toString() {
         return nombre + (infectada ? " (Infectada)" : " (Sana)");
     }
 }
 
 // Clase Jugador que representa un jugador en el juego
-class Jugadorr {
+class Jugador {
     private String nombre;
     private String rol;
 
-    public Jugadorr(String nombre, String rol) {
+    public Jugador(String nombre, String rol) {
         this.nombre = nombre;
         this.rol = rol;
     }
@@ -54,7 +52,7 @@ class Jugadorr {
         return rol;
     }
 
-    @Override
+
     public String toString() {
         return nombre + " (" + rol + ")";
     }
@@ -62,8 +60,8 @@ class Jugadorr {
 
 // Clase principal del juego que gestiona el estado del juego y los jugadores
 public class Juego {
-    private List<ciudad> ciudades;
-    private List<Jugadorr> jugadores;
+    private List<Ciudad> ciudades;
+    private List<Jugador> jugadores;
     private Scanner scanner;
     private int turnoActual;
 
@@ -77,11 +75,11 @@ public class Juego {
     }
 
     private void inicializarCiudades() {
-        // Inicializar algunas ciudades
-        ciudades.add(new ciudad("New York"));
-        ciudades.add(new ciudad("Los Angeles"));
-        ciudades.add(new ciudad("Chicago"));
-        ciudades.add(new ciudad("Miami"));
+        // Inicializar algunas ciudades predeterminadas
+        ciudades.add(new Ciudad("New York"));
+        ciudades.add(new Ciudad("Los Angeles"));
+        ciudades.add(new Ciudad("Chicago"));
+        ciudades.add(new Ciudad("Miami"));
     }
 
     private void inicializarJugadores() {
@@ -91,19 +89,35 @@ public class Juego {
             String nombre = scanner.nextLine();
             System.out.print("Ingrese el rol del jugador " + i + " (por ejemplo, Médico, Científico, etc.): ");
             String rol = scanner.nextLine();
-            jugadores.add(new Jugadorr(nombre, rol));
+            jugadores.add(new Jugador(nombre, rol));
         }
     }
 
-    public void mostrarEstado() {
+    private void agregarCiudad() {
+        System.out.print("Ingrese el nombre de la nueva ciudad: ");
+        String nombreCiudad = scanner.nextLine();
+        ciudades.add(new Ciudad(nombreCiudad));
+        System.out.println("Ciudad agregada: " + nombreCiudad);
+    }
+
+    private void agregarJugador() {
+        System.out.print("Ingrese el nombre del nuevo jugador: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese el rol del nuevo jugador (por ejemplo, Médico, Científico, etc.): ");
+        String rol = scanner.nextLine();
+        jugadores.add(new Jugador(nombre, rol));
+        System.out.println("Jugador agregado: " + nombre + " (" + rol + ")");
+    }
+
+    private void mostrarEstado() {
         System.out.println("Estado de las ciudades:");
-        for (org.example.ciudad ciudad : ciudades) {
+        for (Ciudad ciudad : ciudades) {
             System.out.println(ciudad);
         }
     }
 
-    public void infectarCiudad(String nombreCiudad) {
-        for (org.example.ciudad ciudad : ciudades) {
+    private void infectarCiudad(String nombreCiudad) {
+        for (Ciudad ciudad : ciudades) {
             if (ciudad.getNombre().equalsIgnoreCase(nombreCiudad)) {
                 ciudad.infectar();
                 System.out.println("Ciudad infectada: " + ciudad);
@@ -113,8 +127,8 @@ public class Juego {
         System.out.println("Ciudad no encontrada.");
     }
 
-    public void curarCiudad(String nombreCiudad) {
-        for (org.example.ciudad ciudad : ciudades) {
+    private void curarCiudad(String nombreCiudad) {
+        for (Ciudad ciudad : ciudades) {
             if (ciudad.getNombre().equalsIgnoreCase(nombreCiudad)) {
                 ciudad.curar();
                 System.out.println("Ciudad curada: " + ciudad);
@@ -126,20 +140,22 @@ public class Juego {
 
     private void mostrarJugadores() {
         System.out.println("Jugadores:");
-        for (Jugadorr jugador : jugadores) {
+        for (Jugador jugador : jugadores) {
             System.out.println(jugador);
         }
     }
 
     public void jugar() {
         while (true) {
-            Jugadorr jugadorActual = jugadores.get(turnoActual);
+            Jugador jugadorActual = jugadores.get(turnoActual);
             System.out.println("\n--- Turno de " + jugadorActual.getNombre() + " (" + jugadorActual.getRol() + ") ---");
             System.out.println("1. Mostrar estado de las ciudades");
             System.out.println("2. Infectar ciudad");
             System.out.println("3. Curar ciudad");
             System.out.println("4. Mostrar jugadores");
-            System.out.println("5. Salir");
+            System.out.println("5. Agregar nueva ciudad");
+            System.out.println("6. Agregar nuevo jugador");
+            System.out.println("7. Salir");
 
             int opcion = scanner.nextInt();
             scanner.nextLine();  // Limpiar el buffer
@@ -162,6 +178,12 @@ public class Juego {
                     mostrarJugadores();
                     break;
                 case 5:
+                    agregarCiudad();
+                    break;
+                case 6:
+                    agregarJugador();
+                    break;
+                case 7:
                     System.out.println("¡Gracias por jugar!");
                     return;
                 default:
