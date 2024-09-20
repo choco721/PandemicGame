@@ -11,23 +11,19 @@ public class Main {
         List<Jugador> jugadores = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        // Crear ciudades
         Ciudad newYork = new Ciudad("New York");
         Ciudad losAngeles = new Ciudad("Los Angeles");
         Ciudad chicago = new Ciudad("Chicago");
         Ciudad miami = new Ciudad("Miami");
 
-        // Añadir ciudades al tablero
         tablero.addCiudad(newYork);
         tablero.addCiudad(losAngeles);
         tablero.addCiudad(chicago);
         tablero.addCiudad(miami);
 
-        // Conectar ciudades
         tablero.conectarCiudades("New York", "Los Angeles");
         tablero.conectarCiudades("Chicago", "Miami");
 
-        // Añadir jugadores
         System.out.println("¡Bienvenidos al juego Pandemic Game!");
         for (int i = 0; i < 4; i++) {
             System.out.print("Ingrese el nombre del jugador " + (i + 1) + ": ");
@@ -104,21 +100,20 @@ public class Main {
                 case 5:
                     tablero.mostrarConexiones();
                     break;
-                case 6: // Sacar carta de infección
+                case 6:
                     Carta cartaSacada = gestorDeCartas.sacarCarta();
                     if (cartaSacada != null) {
                         System.out.println("Carta sacada: " + cartaSacada);
-                        cartaSacada.aplicarEfecto(gestorDeCartas, tablero, jugadorActual); // Aplica el efecto de la carta
+                        cartaSacada.aplicarEfecto(gestorDeCartas, tablero, jugadorActual);
                     } else {
                         System.out.println("No hay más cartas en el mazo.");
                     }
                     break;
-                case 7: // Mover jugador
+                case 7:
                     System.out.print("Ingrese el nombre de la ciudad a la que desea moverse: ");
                     String nombreCiudadDestino = scanner.nextLine();
                     Ciudad ciudadDestino = tablero.getCiudad(nombreCiudadDestino);
                     if (ciudadDestino != null) {
-                        // Verificar si la ciudad destino está conectada con la ciudad actual
                         if (jugadorActual.getCiudadActual() != null &&
                                 jugadorActual.getCiudadActual().getConexiones().contains(ciudadDestino)) {
                             jugadorActual.setCiudadActual(ciudadDestino);
@@ -133,26 +128,21 @@ public class Main {
                         System.out.println("Ciudad no encontrada.");
                     }
                     break;
-                case 8: // Salir
+                case 8:
                     System.out.println("¡Gracias por jugar!");
                     juegoEnCurso = false;
                     break;
                 default:
                     System.out.println("Opción no válida.");
             }
-
-            // Comprobar condiciones de fin del juego
             if (tablero.hayBrotes()) {
                 System.out.println("¡El juego ha terminado! Los brotes han alcanzado el límite.");
                 juegoEnCurso = false;
             }
-
             if (tablero.todasLasCurasEncontradas()) {
                 System.out.println("¡Victoria! Se han encontrado todas las curas.");
                 juegoEnCurso = false;
             }
-
-            // Pasar al siguiente turno solo si no se han mostrado estados o conexiones
             if (opcion != 1 && opcion != 5) {
                 turnoActual = (turnoActual + 1) % jugadores.size();
             }

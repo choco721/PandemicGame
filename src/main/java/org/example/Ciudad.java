@@ -30,14 +30,13 @@ public class Ciudad {
         if (fichasDeInfeccion >= 3) {
             infectada = true;
             System.out.println("¡Brote en " + nombre + "!");
-            // Aquí puedes agregar lógica para generar brotes en ciudades conectadas
-            fichasDeInfeccion = 0; // Reiniciar las fichas tras el brote
+            fichasDeInfeccion = 0;
         }
     }
 
     public void curar() {
         this.infectada = false;
-        this.fichasDeInfeccion = 0; // Curar también elimina las fichas de infección
+        this.fichasDeInfeccion = 0;
         System.out.println("La ciudad " + nombre + " se ha curado.");
     }
 
@@ -59,7 +58,6 @@ public class Ciudad {
     public Set<Ciudad> getConexiones() {
         return conexiones;
     }
-
 
     public String toString() {
         return nombre + (infectada ? " (Infectada)" : " (Sana)") + " - Fichas de infección: " + fichasDeInfeccion;

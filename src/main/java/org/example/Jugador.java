@@ -3,7 +3,7 @@ package org.example;
 public class Jugador {
     private String nombre;
     private String rol;
-    private Ciudad ciudadActual; // Añadido para almacenar la ciudad actual
+    private Ciudad ciudadActual;
 
     public Jugador(String nombre, String rol) {
         this.nombre = nombre;
@@ -26,7 +26,6 @@ public class Jugador {
         this.ciudadActual = ciudad;
     }
 
-    @Override
     public String toString() {
         return nombre + " (" + rol + ") - Ciudad actual: " + (ciudadActual != null ? ciudadActual.getNombre() : "Ninguna");
     }

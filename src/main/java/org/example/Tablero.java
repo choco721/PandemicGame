@@ -10,7 +10,7 @@ public class Tablero {
 
     public Tablero() {
         ciudades = new HashMap<>();
-        curasEncontradas = new boolean[4]; // Suponemos 4 enfermedades
+        curasEncontradas = new boolean[4];
         numeroDeBrotes = 0;
     }
 
@@ -33,14 +33,13 @@ public class Tablero {
         }
     }
 
-
     public void conectarCiudades(String nombreCiudad1, String nombreCiudad2) {
         Ciudad ciudad1 = ciudades.get(nombreCiudad1);
         Ciudad ciudad2 = ciudades.get(nombreCiudad2);
 
         if (ciudad1 != null && ciudad2 != null) {
             ciudad1.addConnection(ciudad2);
-            ciudad2.addConnection(ciudad1); // Conexión bidireccional
+            ciudad2.addConnection(ciudad1);
         } else {
             System.out.println("Advertencia: Una o ambas ciudades no existen en el tablero.");
         }
@@ -68,7 +67,7 @@ public class Tablero {
     }
 
     public boolean hayBrotes() {
-        return numeroDeBrotes >= 8; // Suponemos que el límite de brotes es 8
+        return numeroDeBrotes >= 8;
     }
 
     public void aumentarBrotes() {
@@ -76,14 +75,13 @@ public class Tablero {
     }
 
     public boolean hayFichasDeInfeccion() {
-        // Suponemos que siempre hay suficientes fichas para este ejemplo
         return true;
     }
 
     public boolean ciudadTieneFichasDeInfeccion(String nombreCiudad) {
         Ciudad ciudad = ciudades.get(nombreCiudad);
         if (ciudad != null) {
-            return ciudad.getFichasDeInfeccion() < 3; // Suponiendo que se requiere una ficha de infección
+            return ciudad.getFichasDeInfeccion() < 3;
         }
         return false;
     }

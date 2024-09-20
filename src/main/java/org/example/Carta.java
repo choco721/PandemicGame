@@ -17,25 +17,22 @@ public class Carta {
         return contenido;
     }
 
-    @Override
+
     public String toString() {
         return tipo + ": " + contenido;
     }
 
-    // Método para aplicar el efecto de la carta
+
     public void aplicarEfecto(GestorDeCartas gestorDeCartas, Tablero tablero, Jugador jugador) {
         if (tipo.equals("Evento")) {
-            // Efectos de cartas de evento (ya descritos anteriormente)
         } else if (tipo.equals("Enfermedad")) {
-            Ciudad ciudadActual = jugador.getCiudadActual(); // Asumiendo que el jugador tiene una ciudad actual
+            Ciudad ciudadActual = jugador.getCiudadActual();
             if (ciudadActual != null) {
-                ciudadActual.infectar(); // Infecta la ciudad actual del jugador
+                ciudadActual.infectar();
                 System.out.println("Se ha sacado una carta de enfermedad: " + contenido);
                 if (ciudadActual.getFichasDeInfeccion() >= 3) {
-                    // Si se alcanza el límite de fichas de infección, genera un brote
-                    ciudadActual.setFichasDeInfeccion(0); // Reinicia las fichas de infección
+                    ciudadActual.setFichasDeInfeccion(0);
                     System.out.println("¡Brote en " + ciudadActual.getNombre() + "!");
-                    // Aquí podrías implementar la lógica para afectar ciudades conectadas
                 }
             } else {
                 System.out.println("El jugador no está en ninguna ciudad.");
