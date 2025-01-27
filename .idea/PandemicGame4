@@ -1,0 +1,163 @@
+import java.util.Arrays;
+public class PandemicGamep4 {
+
+
+        // Enumeración CartasJugables
+        public enum CartasJugables {
+            BUENOS_AIRES("amarillo", "Los eventos son la mayor causa de infección."),
+            EL_CAIRO("negro", "Es esencial para generar curas."),
+            TOKIO("rojo", "Es esencial para centrar la enfermedad y buscar la cura."),
+            SAN_FRANCISCO("azul", "Hay menos brotes debido a su ubicación."),
+            PARIS("azul", "Es esencial para la inversión de cartas."),
+            SAO_PAULO("amarillo", "Los jugadores tratan enfermedades aquí."),
+            MOSCU("negro", "Es clave para intercambiar cartas y planear estrategias.");
+
+            private final String color;
+            private final String descripcion;
+
+            CartasJugables(String color, String descripcion) {
+                this.color = color;
+                this.descripcion = descripcion;
+            }
+
+            @Override
+            public String toString() {
+                return "La carta de " + this.name().replace("_", " ") + " está asociada con el color " + color + ". " + descripcion;
+            }
+
+            public String getColor() {
+                return color;
+            }
+        }
+
+        // Enumeración TIPOS_ENFERMEDAD
+        public enum TIPOS_ENFERMEDAD {
+            AMARILLA("América del Sur", "Puede volverse peligrosa si no se controla."),
+            NEGRA("Medio Oriente y parte de Asia", "Conecta varias ciudades cercanas, lo que facilita brotes en cadena."),
+            AZUL("Europa y América del Norte", "Tiende a ser inicial porque suele estar más cerca de los puntos de partida."),
+            ROJA("Oceanía y parte de Asia", "Puede ser difícil de atender si los jugadores no se organizan.");
+
+            private final String region;
+            private final String descripcion;
+
+            TIPOS_ENFERMEDAD(String region, String descripcion) {
+                this.region = region;
+                this.descripcion = descripcion;
+            }
+
+            @Override
+            public String toString() {
+                return "La enfermedad " + this.name() + " pertenece a la región de " + region + ". " + descripcion;
+            }
+
+            public String getRegion() {
+                return region;
+            }
+
+            public String getDescripcion() {
+                return descripcion;
+            }
+        }
+
+        // Enumeración Cartas_Epidemia
+        public enum Cartas_Epidemia {
+            INFECCION("Selecciona la última carta de ciudad del mazo y añade 3 cubos de enfermedad."),
+            INCREMENTAR("Mueve el marcador de tasa de infección una posición a la derecha."),
+            INTENSIFICACION("Baraja las cartas descartadas y colócalas encima del mazo de infección.");
+
+            private final String funcion;
+
+            Cartas_Epidemia(String funcion) {
+                this.funcion = funcion;
+            }
+
+            public String getFuncion() {
+                return funcion;
+            }
+
+            @Override
+            public String toString() {
+                return this.name() + ": " + funcion;
+            }
+        }
+
+        // Enumeración Cartas_Eventos
+        public enum Cartas_Eventos {
+            AIRLIFT("Mover cualquier jugador a otra ciudad sin gastar acciones."),
+            RESILIENT_POPULATION("Descartar una carta de infección de la pila de descarte."),
+            GOVERNMENT_GRANT("Construir una estación de investigación en cualquier ciudad.");
+
+            private final String funcion;
+
+            Cartas_Eventos(String funcion) {
+                this.funcion = funcion;
+            }
+
+            public String getFuncion() {
+                return funcion;
+            }
+
+            @Override
+            public String toString() {
+                return this.name() + ": " + funcion;
+            }
+        }
+
+        // Enumeración Tipos_roles
+        public enum Tipos_roles {
+            MEDICO("Cura todas las enfermedades de una ciudad, retirando todos los cubos."),
+            CIENTIFICO("Necesita solo 4 cartas del mismo color para descubrir una cura."),
+            INVESTIGADOR("Puede intercambiar cartas con otros jugadores en la misma ciudad."),
+            EXPERTO_EN_OPERACIONES("Puede construir centros de investigación en su ciudad."),
+            ESPECIALISTA_EN_CUARENTENA("Previene brotes en la ciudad y áreas adyacentes."),
+            PLANEADOR_DE_CONTINGENCIA("Puede reutilizar una carta de evento descartada."),
+            DESPACHADOR("Puede mover peones de otros jugadores como si fueran propios.");
+
+            private final String descripcion;
+
+            Tipos_roles(String descripcion) {
+                this.descripcion = descripcion;
+            }
+
+            @Override
+            public String toString() {
+                return this.name() + ": " + descripcion;
+            }
+        }
+
+        // Clase Ciudad
+        static class Ciudad {
+            private final String nombre;
+
+            public Ciudad(String nombre) {
+                this.nombre = nombre;
+            }
+
+            public String getNombre() {
+                return nombre;
+            }
+        }
+
+        // Método principal
+        public static void main(String[] args) {
+            // Imprimir cartas jugables
+            System.out.println("Cartas jugables:");
+            Arrays.stream(CartasJugables.values()).forEach(System.out::println);
+
+            // Imprimir tipos de enfermedades
+            System.out.println("\nTipos de enfermedades:");
+            Arrays.stream(TIPOS_ENFERMEDAD.values()).forEach(System.out::println);
+
+            // Imprimir cartas de epidemia
+            System.out.println("\nCartas de epidemia:");
+            Arrays.stream(Cartas_Epidemia.values()).forEach(System.out::println);
+
+            // Imprimir cartas de eventos
+            System.out.println("\nCartas de eventos:");
+            Arrays.stream(Cartas_Eventos.values()).forEach(System.out::println);
+
+            // Imprimir tipos de roles
+            System.out.println("\nRoles de jugadores:");
+            Arrays.stream(Tipos_roles.values()).forEach(System.out::println);
+        }
+    }
