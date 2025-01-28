@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.Scanner;
 
 public class rolesPG {
 
@@ -24,13 +23,13 @@ public class rolesPG {
 
     public static void main(String[] args) {
         initializeConnections();
+        Scanner scanner = new Scanner(System.in);
 
         // Introducción
         System.out.println("Bienvenidos a Pandemic Game. Estas son sus reglas.");
-        System.out.println("Cartas disponibles: Buenos Aires, El Cairo, Tokio, San Francisco, París, New york, Lima, São Paulo, Moscú.");
+        System.out.println("Cartas disponibles: Buenos Aires, El Cairo, Tokio, San Francisco, París, New York, Lima, São Paulo, Moscú.");
 
         // Selección de carta de ciudad
-        Scanner scanner = new Scanner(System.in);
         System.out.println("¿Qué carta desea elegir para ver sus consecuencias?");
         String ciudad = scanner.nextLine().toLowerCase();
         mostrarConsecuenciasCiudad(ciudad);
@@ -43,15 +42,25 @@ public class rolesPG {
 
         // Movimiento entre ciudades
         System.out.println("\nPrueba de movilidad en el juego.");
-        System.out.print("Ingrese la ciudad de origen: ");
+        System.out.print("Ingrese la ciudad de origen, entre (buenos aires, sao paulo, lima, new york, tokio, san francisco, paris o moscu: ");
         String ciudadOrigen = scanner.nextLine().toLowerCase();
-        System.out.print("Ingrese la ciudad de destino: ");
+        System.out.print("Ingrese la ciudad de destino : ");
         String ciudadDestino = scanner.nextLine().toLowerCase();
 
         if (esMovimientoPermitido(ciudadOrigen, ciudadDestino)) {
             System.out.println("Movimiento permitido de " + ciudadOrigen + " a " + ciudadDestino);
         } else {
             System.out.println("Movimiento no permitido de " + ciudadOrigen + " a " + ciudadDestino);
+        }
+
+        // Rol de cubos
+        System.out.println("\nSeleccione la cantidad de cubos para una ciudad (1, 2, 3 o 4)  :");
+        String cubos = scanner.nextLine().toLowerCase();
+
+        if (!cubos.matches("[1-4]")) {
+            System.out.println("Entrada no válida. Por favor, introduzca un número entre 1 y 4.");
+        } else {
+            mostrarConsecuenciasCubos(cubos);
         }
 
         scanner.close();
@@ -61,7 +70,7 @@ public class rolesPG {
     private static void initializeConnections() {
         cityConnections.put("buenos aires", Arrays.asList("sao paulo", "bogota"));
         cityConnections.put("sao paulo", Arrays.asList("buenos aires", "lagos", "madrid"));
-        cityConnections.put("lima", Arrays.asList("santiago","mexico city"));
+        cityConnections.put("lima", Arrays.asList("santiago", "mexico city"));
         cityConnections.put("new york", Arrays.asList("madrid", "london"));
         cityConnections.put("tokio", Arrays.asList("seul", "shanghai"));
         cityConnections.put("san francisco", Arrays.asList("tokio", "los angeles", "chicago"));
@@ -100,10 +109,11 @@ public class rolesPG {
                 System.out.println("Color asociado: Negro. Intercambio de cartas y planes para nuevas curas.");
                 break;
             case "new york":
-                System.out.println("Color asociado: azul. sirve para hacer intercambio de cartas con paises europeos");
+                System.out.println("Color asociado: Azul. Sirve para hacer intercambio de cartas con países europeos.");
                 break;
             case "lima":
-                System.out.println("color asociado: Amarillo. sirve para despejar cubos e intervenir curas");
+                System.out.println("Color asociado: Amarillo. Sirve para despejar cubos e intervenir curas.");
+                break;
             default:
                 System.out.println("Esta carta no está disponible.");
                 break;
@@ -130,5 +140,22 @@ public class rolesPG {
                 break;
         }
     }
-    
+
+    // Mostrar consecuencias de los cubos
+    private static void mostrarConsecuenciasCubos(String cubos) {
+        switch (cubos) {
+            case "1":
+                System.out.println("Una ciudad con un cubo representa un brote mínimo.");
+                break;
+            case "2":
+                System.out.println("Una ciudad con 2 cubos refleja brotes constantes.");
+                break;
+            case "3":
+                System.out.println("3 cubos indican que la ciudad está gravemente infectada.");
+                break;
+            case "4":
+                System.out.println("No es posible que una ciudad tenga 4 cubos. Tendría 3, y el cubo extra se repartiría a una ciudad cercana.");
+                break;
+        }
+    }
 }
