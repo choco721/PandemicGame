@@ -1,0 +1,134 @@
+import java.util.*;
+import java.util.Scanner;
+
+public class rolesPG {
+
+    // Enum para tipos de cartas
+    enum CartasJugables {
+        CARTAS_DE_CIUDADES,
+        CARTAS_DE_ENFERMEDAD,
+        CARTAS_DE_EPIDEMIA,
+        CARTAS_DE_EVENTO
+    }
+
+    // Enum para tipos de jugadores
+    enum TiposDeJugadores {
+        MEDICO,
+        CIENTIFICO,
+        INVESTIGADOR,
+        EXPERTO_EN_OPERACIONES
+    }
+
+    // Mapa de conexiones entre ciudades
+    private static final Map<String, List<String>> cityConnections = new HashMap<>();
+
+    public static void main(String[] args) {
+        initializeConnections();
+
+        // Introducción
+        System.out.println("Bienvenidos a Pandemic Game. Estas son sus reglas.");
+        System.out.println("Cartas disponibles: Buenos Aires, El Cairo, Tokio, San Francisco, París, New york, Lima, São Paulo, Moscú.");
+
+        // Selección de carta de ciudad
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("¿Qué carta desea elegir para ver sus consecuencias?");
+        String ciudad = scanner.nextLine().toLowerCase();
+        mostrarConsecuenciasCiudad(ciudad);
+
+        // Selección de enfermedad
+        System.out.println("\nTipos de enfermedades disponibles: Negra, Azul, Amarilla, Roja.");
+        System.out.println("Elija un tipo de enfermedad:");
+        String enfermedad = scanner.nextLine().toLowerCase();
+        mostrarEnfermedadAsociada(enfermedad);
+
+        // Movimiento entre ciudades
+        System.out.println("\nPrueba de movilidad en el juego.");
+        System.out.print("Ingrese la ciudad de origen: ");
+        String ciudadOrigen = scanner.nextLine().toLowerCase();
+        System.out.print("Ingrese la ciudad de destino: ");
+        String ciudadDestino = scanner.nextLine().toLowerCase();
+
+        if (esMovimientoPermitido(ciudadOrigen, ciudadDestino)) {
+            System.out.println("Movimiento permitido de " + ciudadOrigen + " a " + ciudadDestino);
+        } else {
+            System.out.println("Movimiento no permitido de " + ciudadOrigen + " a " + ciudadDestino);
+        }
+
+        scanner.close();
+    }
+
+    // Inicializar conexiones entre ciudades
+    private static void initializeConnections() {
+        cityConnections.put("buenos aires", Arrays.asList("sao paulo", "bogota"));
+        cityConnections.put("sao paulo", Arrays.asList("buenos aires", "lagos", "madrid"));
+        cityConnections.put("lima", Arrays.asList("santiago","mexico city"));
+        cityConnections.put("new york", Arrays.asList("madrid", "london"));
+        cityConnections.put("tokio", Arrays.asList("seul", "shanghai"));
+        cityConnections.put("san francisco", Arrays.asList("tokio", "los angeles", "chicago"));
+        cityConnections.put("paris", Arrays.asList("londres", "madrid", "essen"));
+        cityConnections.put("moscu", Arrays.asList("estambul", "teheran"));
+        // Añadir más conexiones según el juego
+    }
+
+    // Validar si el movimiento entre dos ciudades es permitido
+    private static boolean esMovimientoPermitido(String origen, String destino) {
+        return cityConnections.containsKey(origen) && cityConnections.get(origen).contains(destino);
+    }
+
+    // Mostrar consecuencias de la ciudad seleccionada
+    private static void mostrarConsecuenciasCiudad(String ciudad) {
+        switch (ciudad) {
+            case "buenos aires":
+                System.out.println("Color asociado: Amarillo. Mayor causa de infecciones: eventos.");
+                break;
+            case "el cairo":
+                System.out.println("Color asociado: Negro. Alta cantidad de brotes y casos de infecciones.");
+                break;
+            case "tokio":
+                System.out.println("Color asociado: Rojo. Centrar estrategias para curas por su gran tamaño.");
+                break;
+            case "san francisco":
+                System.out.println("Color asociado: Azul. Menos brotes por ubicación esquinada.");
+                break;
+            case "paris":
+                System.out.println("Color asociado: Azul. Estrategia clave para compartir cartas.");
+                break;
+            case "sao paulo":
+                System.out.println("Color asociado: Amarillo. Foco para tratar enfermedades.");
+                break;
+            case "moscu":
+                System.out.println("Color asociado: Negro. Intercambio de cartas y planes para nuevas curas.");
+                break;
+            case "new york":
+                System.out.println("Color asociado: azul. sirve para hacer intercambio de cartas con paises europeos");
+                break;
+            case "lima":
+                System.out.println("color asociado: Amarillo. sirve para despejar cubos e intervenir curas");
+            default:
+                System.out.println("Esta carta no está disponible.");
+                break;
+        }
+    }
+
+    // Mostrar enfermedad asociada a un color
+    private static void mostrarEnfermedadAsociada(String enfermedad) {
+        switch (enfermedad) {
+            case "negra":
+                System.out.println("Esta enfermedad pertenece a las cartas de Medio Oriente/Asia.");
+                break;
+            case "azul":
+                System.out.println("Esta enfermedad pertenece a las cartas de Europa y América del Norte.");
+                break;
+            case "amarilla":
+                System.out.println("Esta enfermedad pertenece a las cartas de América del Sur.");
+                break;
+            case "roja":
+                System.out.println("Esta enfermedad pertenece a las cartas de Asia y Oceanía.");
+                break;
+            default:
+                System.out.println("Tipo de enfermedad no reconocido.");
+                break;
+        }
+    }
+    
+}
